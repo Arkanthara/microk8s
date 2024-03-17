@@ -36,7 +36,11 @@ microk8s kubectl get service dashboard-nodeport --namespace=kube-system
 
 microk8s kubectl describe secrets -n kube-system microk8s-dashboard-token
 
-## Create account rbac
+## Access to the dashboard from your remote machine (from your browser)
+
+https://pinfo1.unige.ch:30192
+
+# Create account role based access control (rbac)
 
 
 "steps.md" 61L, 1487B                                                                                                                                                        61,0-1        Bot
