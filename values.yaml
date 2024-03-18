@@ -1,0 +1,26 @@
+runnerToken: "glrt-VEtgeWdhbi_xvEQkJwwa"
+gitlabUrl: https://gitlab.unige.ch
+rbac:
+  create: false
+  serviceAccountName: gitlab-runner
+
+runners:
+  name: "my-runner"
+  url: "${gitlabUrl}"
+  token: "${runnerToken}"
+  secret: gitlab-runner-secret
+  executor: "kubernetes"
+  kubernetes:
+    namespace: "test"
+    # image: "gradle:latest"
+    service_account: gitlab-runner
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: gitlab-runner-secret
+type: Opaque
+data:
+  runner-registration-token: ""
+  runner-token: "${runnerToken}"
