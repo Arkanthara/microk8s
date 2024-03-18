@@ -41,7 +41,34 @@ microk8s kubectl describe secrets -n kube-system microk8s-dashboard-token
 https://pinfo1.unige.ch:30192
 
 # Create account role based access control (rbac)
+in file read_only_dashboard.yaml
+microk8s kubectl apply -f read_only_dashboard.yaml
+
+# Create token for this account
+microk8s kubectl create token -n kube-system $USER
+Now, you can access to the dashboard thanks to the token of the new account
+
+# Gitlab runner
+microk8s helm3 repo add gitlab https://charts.gitlab.io
+microk8s helm3 repo update gitlab
+microk8s helm3 search repo -l gitlab/gitlab-runner
+
+## Create new namespace and user to test gitlab runner
+in file user_gitlab.yaml
+microk8s kubectl apply -f user_gitlab.yaml
+
+## Config and create runner (configuration of runner is in values.yaml !)
+microk8s helm3 install -n <NAMESPACE> gitlab-runner -f values.yaml gitlab/gitlab-runner
+
+## Create Docker image in image.dockerfile
+## Active container registry in project settings
+## Add the docker image in container registry:
+### login to container registry
+docker login registry.gitlab.unige.ch
+docker build -t registry.gitlab.unige.ch/p-info-2024/p-info-3/phony/test .
+docker push registry.gitlab.unige.ch/p-info-2024/p-info-3/phony/test
+
+## Configure .gitlab-ci.yml and run pipeline !
 
 
-"steps.md" 61L, 1487B                                                                                                                                                        61,0-1        Bot
 
