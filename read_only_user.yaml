@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  namespace: kube-system
+  name: darcy
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: kube-system
+  name: dashboard_read_only_role
+rules:
+- apiGroups: [""]
+  resources: ["pods", "services", "configmaps", "namespaces", "secrets"]  # Ajoutez les ressources auxquelles l'utilisateur doit avoir accès
+  verbs: ["get", "list", "watch"]  # Définissez les permissions nécessaires
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  namespace: kube-system
+  name: dashboard_read_only_rolebinding
+subjects:
+- kind: ServiceAccount
+  name: darcy  # Nom de l'utilisateur
+  namespace: kube-system
+roleRef:
+  kind: Role
+  name: dashboard_read_only_role  # Nom du rôle défini précédemment
+  apiGroup: rbac.authorization.k8s.io
