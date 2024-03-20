@@ -70,5 +70,17 @@ docker push registry.gitlab.unige.ch/p-info-2024/p-info-3/phony/test
 
 ## Configure .gitlab-ci.yml and run pipeline !
 
+## Gitlab agent: install from gitlab
+apply command given in microk8s:
+
+helm repo add gitlab https://charts.gitlab.io
+helm repo update
+helm upgrade --install my-super-agent gitlab/gitlab-agent \
+    --namespace gitlab-agent-my-super-agent \
+    --create-namespace \
+    --set image.tag=v16.9.2 \
+    --set config.token=glagent-zdVZf7Kccxk5uvy9VZF85LGSzCEZnKmjBhZAyfvMG_B7TykSiA \
+    --set config.kasAddress=wss://gitlab.unige.ch/-/kubernetes-agent/
+
 
 
