@@ -8,6 +8,15 @@ microk8s.kubectl logs nameofthedefectpod -n kube-system
 
 ## If needed, enable ports on firewall
 
+https://microk8s.io/docs/troubleshooting
+
+Command that works: 
+
+```ssh
+sudo ufw allow in on vxlan.calico && sudo ufw allow out on vxlan.calico
+sudo ufw allow in on cali+ && sudo ufw allow out on cali+
+```
+
 ### Example of error message:
 
 [WARNING] plugin/kubernetes: Kubernetes API connection failure: Get "https://10.152.183.1:443/version": dial tcp 10.152.183.1:443: i/o timeout
